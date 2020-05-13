@@ -9,13 +9,12 @@ import { StyleSheet,
         TextInput,
         TouchableOpacity
       } from 'react-native';
-
 import imagen from './media/Meme.jpg'
-     
+import Hijo from './src/hijo'     
+import Welcome from './src/welcome'
 
 
-
- class App extends Component  {
+class App extends Component  {
 
 
   constructor(props) {
@@ -23,35 +22,40 @@ import imagen from './media/Meme.jpg'
     this.state = {
       Nombre:'',
       Contraseña:'',
-      Estado:'',
+      Estado:0,
 
     };
   }
 
   login = () =>{
 
+    this.setState(
+      {
+        Estado: 1
+      }
+    )
     const {Nombre}= this.state
     const {Contraseña}= this.state
     const {Estado} = this.state
-    if ( (Nombre === '') && (Contraseña === '')){
-      //Alert.alert('Nombre o contraseña vacíos')
+     /* if ( (Nombre === '') && (Contraseña === '')){
+      Alert.alert('Nombre o contraseña vacíos')
       //{(Estado)=>{this.setState('Nombre o contraseña vacíos')}}
       
 
     }
     else{
-      Alert.alert('Usuario: '+ Nombre + ' Contraseña: '+ Contraseña)
-    }
+     Nombre = this.state.Nombre
+     Contraseña = this.state.Contraseña
     
+    }  */
   }
-
   touch = () =>{
     Alert.alert('Touch normal')
   }
 
   longTouch = () =>{
     Alert.alert('Touch largo')
-  }
+  };
 
 
   render (){
@@ -62,84 +66,62 @@ import imagen from './media/Meme.jpg'
 
 
         return (
+
+          this.state.Estado == 0 ?
           <View style={styles.container}>
-      
-      
-                <View style={styles.header} >
-                  <View syle={styles.headerLeft} >
-                    <TouchableOpacity onPress={()=>this.touch()} onLongPress={()=>this.longTouch()} >
-                      <Image
-                        style={styles.image}
-                        source={imagen}
-                        >
-        
-                      </Image>                     
-                    </TouchableOpacity>
-                  </View>
-      
-                  <View syle={styles.headerRight} >
-                    <Button 
-                      style={styles.button} 
-                      title="Ingresar"
-                      onPress={() => this.login()}
-                      >
-                    </Button>
-                  </View>
-                </View>
+            <View style={styles.header} >
+              <View syle={styles.headerLeft} >
+                <TouchableOpacity onPress={()=>this.touch()} >
+                 <Image
+                  style={styles.image}
+                 source={imagen}
+                  />                  
+                 </TouchableOpacity>
+              </View>
+              <View syle={styles.headerRight} >
+                <Button 
+                style={styles.button} 
+                title="Ingresar"
+                onPress={() => this.login()}
+                >
+              </Button>
+             </View>
+            </View>
 
 
-                <View style={styles.body}>
-                  <View>
-                    <TextInput
-                      style={styles.textimput}
-                      placeholder="Nombree"
-                      //value={Nombre}
-                      onChangeText={(Nombre)=> {this.setState({Nombre})}}
-                      >
-                    </TextInput>
-                  </View>
+             <View style={styles.body}>
+              <View>
+                <TextInput
+                 style={styles.textimput}
+                  placeholder="Nombree"
+                  //value={Nombre}
+                  onChangeText={(Nombre)=> {this.setState({Nombre})}}
+               >
+                </TextInput>
+              </View>
 
-                  <View>
-                    <TextInput
-                      style={styles.textimput}
-                      placeholder="Contraseña"
-                      //value={Contraseña}
-                      onChangeText={(Contraseña)=> {this.setState({Contraseña})}}
-                      >
-                    </TextInput>
-                  </View>
-
-                  <View>
-                    <Text>
-                      {Estado}
-                    </Text>
-                  </View>
-
-                </View>
-
-
-                <View style={styles.leg} >
-                  <View style={styles.f1} />
-                  <View style={styles.f2} />
-                  <View style={styles.f3} />
-                </View>
-
-                <View style={styles.footer} >
-                  <View style={styles.f1} />
-                  <View style={styles.f2} />
-                  <View style={styles.f3} />
-                </View>
-      
-      
+              <View>
+               <TextInput
+                 style={styles.textimput}
+                 placeholder="Contraseña"
+                //value={Contraseña}
+                onChangeText={(Contraseña)=> {this.setState({Contraseña})}}
+                >
+                </TextInput>
+              </View>
+            </View>
           </View>
-        );
+          :
+          <Welcome nombre={this.state.Nombre} contraseña={this.state.Contraseña}/>
+        )
 
 
+   }
+  
+
+  
   }
-  
 
-  
-}
 
 const styles = StyleSheet.create({
 
@@ -150,10 +132,11 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     marginHorizontal:'20%',
     marginVertical:'15%',
+    
     //justifyContent: 'center',
 
   },
-
+  
   header:{
     flex:1,
     flexDirection:'row',
@@ -175,6 +158,10 @@ const styles = StyleSheet.create({
     width:40,
     height:40,
     borderRadius:10,
+  },
+  image2:{
+    width:80,
+    height:80
   },
 
   body:{
@@ -200,6 +187,7 @@ const styles = StyleSheet.create({
   },
 
   footer:{
+      paddingTop: 40,
     flex:1,
     flexDirection:'row',
     alignItems:'center',
@@ -225,7 +213,6 @@ const styles = StyleSheet.create({
     height:30,
     backgroundColor:'red',
   },
-
 
 });
 
